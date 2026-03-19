@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Высоко — Оргструктура</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #f0ebe4;
+            --bg-card: #faf7f4;
+            --bg-hover: #fff;
+            --text: #1a1714;
+            --text-secondary: #5c534a;
+            --text-muted: #9a8e83;
+            --accent: #b07d4f;
+            --accent-light: rgba(176, 125, 79, 0.14);
+            --accent-border: rgba(176, 125, 79, 0.35);
+            --border: rgba(0, 0, 0, 0.08);
+            --shadow-sm: 0 1px 2px rgba(139, 94, 60, 0.06);
+            --shadow-md: 0 2px 8px rgba(139, 94, 60, 0.08), 0 1px 2px rgba(139, 94, 60, 0.04);
+            --shadow-lg: 0 4px 16px rgba(139, 94, 60, 0.1), 0 2px 4px rgba(139, 94, 60, 0.04);
+            --shadow-inset: inset 0 1px 3px rgba(0, 0, 0, 0.04);
+            --radius: 12px;
+            --radius-sm: 8px;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── PAGE TITLE ── */
+        .page-title {
+            padding: 56px 48px 40px;
+            text-align: center;
+        }
+
+        .page-title h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: -0.01em;
+        }
+
+        .page-title h1 span {
+            color: var(--accent);
+        }
+
+        /* ── CONTENT ── */
+        .content {
+            padding: 48px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* ── SECTION ── */
+        .section-label {
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        /* ── CARD ── */
+        .card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-md);
+            padding: 18px 24px;
+            text-align: center;
+            position: relative;
+            transition: all 0.25s;
+            min-width: 150px;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-1px);
+            background: var(--bg-hover);
+        }
+
+        .card-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: 0.01em;
+        }
+
+        .card-role {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+            line-height: 1.4;
+        }
+
+        .card-tbd {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-style: italic;
+            margin-top: 6px;
+        }
+
+        /* Primary card */
+        .card-primary {
+            background: linear-gradient(135deg, var(--bg-card) 0%, #f0e8e0 100%);
+            border: 1.5px solid var(--accent-border);
+            box-shadow: var(--shadow-lg), 0 0 0 3px var(--accent-light);
+            padding: 20px 28px;
+        }
+
+        .card-primary .card-title {
+            font-size: 22px;
+            color: var(--accent);
+            letter-spacing: 0.02em;
+        }
+
+        /* Leader card */
+        .card-leader {
+            border-color: var(--accent-border);
+            background: linear-gradient(135deg, var(--bg-card) 0%, #f8f2ec 100%);
+        }
+
+        .card-leader .card-title {
+            color: var(--accent);
+        }
+
+        /* Expandable card */
+        .card-expandable {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .card-expandable .card-title::after {
+            content: '';
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            margin-left: 8px;
+            vertical-align: middle;
+            background: var(--accent-light);
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .card-expandable .card-title::after {
+            content: '+';
+            font-size: 12px;
+            font-weight: 400;
+            color: var(--accent);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            background: var(--accent-light);
+            border-radius: 50%;
+            margin-left: 8px;
+            vertical-align: middle;
+            transition: all 0.2s;
+        }
+
+        .card-expandable.expanded .card-title::after {
+            content: '−';
+            background: var(--accent);
+            color: white;
+        }
+
+        .card-details {
+            display: none;
+            text-align: left;
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px solid var(--border);
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        .card-details ul { list-style: none; }
+
+        .card-details li {
+            padding: 3px 0 3px 18px;
+            position: relative;
+        }
+
+        .card-details li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 12px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent-light);
+            border: 1.5px solid var(--accent);
+        }
+
+        .expanded .card-details {
+            display: block;
+            animation: slideDown 0.25s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── CONNECTOR LINES ── */
+        .vline {
+            width: 2px;
+            height: 28px;
+            background: linear-gradient(to bottom, var(--accent-border), var(--border));
+            border-radius: 1px;
+            margin: 0 auto;
+        }
+
+        /* ── TOP LEVEL ── */
+        .top-level {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        /* Staff row */
+        .staff-row {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            padding: 24px 0;
+            position: relative;
+        }
+
+        .staff-row::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 15%;
+            right: 15%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-border) 20%, var(--accent-border) 80%, transparent);
+            border-radius: 1px;
+        }
+
+        /* ── BRANCHES ── */
+        .branches {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            width: 100%;
+            margin-top: 8px;
+            position: relative;
+        }
+
+        .branches::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 25%;
+            right: 25%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-border) 20%, var(--accent-border) 80%, transparent);
+            border-radius: 1px;
+        }
+
+        .branch {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 24px;
+        }
+
+        .branch-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            padding: 4px 12px;
+            background: var(--bg);
+            border-radius: 20px;
+        }
+
+        /* ── TEAM GRID ── */
+        .team-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            max-width: 480px;
+        }
+
+        .team-grid .card {
+            min-width: auto;
+            padding: 8px 14px;
+            border-radius: var(--radius-sm);
+        }
+
+        .team-grid .card-title {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* ── ADMIN BLOCK ── */
+        .admin-block {
+            margin-top: 28px;
+            padding: 20px;
+            background: var(--bg);
+            border-radius: var(--radius);
+            border: 1px dashed var(--accent-border);
+            position: relative;
+        }
+
+        .admin-block-label {
+            position: absolute;
+            top: -9px;
+            left: 20px;
+            background: var(--bg);
+            padding: 0 10px;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .admin-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .admin-grid .card {
+            min-width: auto;
+            padding: 8px 14px;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .admin-grid .card-title {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* ── DUAL REPORT ── */
+        .dual-report {
+            font-size: 10px;
+            color: var(--accent);
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        /* ── SUB BRANCH ── */
+        .sub-branch {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .sub-branch-col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* ── ZONES TABLE ── */
+        .zones {
+            margin-top: 64px;
+        }
+
+        .zones-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: 13px;
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border);
+        }
+
+        .zones-table th {
+            text-align: left;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            padding: 14px 20px;
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .zones-table td {
+            padding: 12px 20px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+            font-size: 14px;
+        }
+
+        .zones-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .zones-table td:first-child {
+            font-weight: 600;
+            color: var(--text);
+            white-space: nowrap;
+            font-size: 14px;
+        }
+
+        .zones-table td:last-child {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .zones-table tr:hover td {
+            background: var(--accent-light);
+        }
+
+        .zone-tbd {
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* ── INTERACTION MATRIX ── */
+        .matrix {
+            margin-top: 64px;
+        }
+
+        .matrix-wrap {
+            overflow-x: auto;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border);
+        }
+
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            background: var(--bg-card);
+            min-width: 700px;
+        }
+
+        .matrix-table th {
+            padding: 12px 10px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .matrix-table th:first-child {
+            text-align: left;
+            padding-left: 16px;
+            min-width: 160px;
+        }
+
+        .matrix-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+            text-align: center;
+            vertical-align: middle;
+            font-size: 16px;
+        }
+
+        .matrix-table td:first-child {
+            text-align: left;
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--text);
+            padding-left: 16px;
+            background: var(--bg);
+        }
+
+        .matrix-table tr:last-child td { border-bottom: none; }
+        .matrix-table td:last-child, .matrix-table th:last-child { border-right: none; }
+
+        .matrix-table tr:hover td { background: var(--accent-light); }
+        .matrix-table tr:hover td:first-child { background: rgba(176, 125, 79, 0.08); }
+
+        .matrix-self { background: var(--bg) !important; }
+
+        .matrix-legend {
+            margin-top: 16px;
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .matrix-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .matrix-legend-icon {
+            font-size: 18px;
+            width: 28px;
+            text-align: center;
+        }
+
+        /* ── FOOTER ── */
+        .footer {
+            padding: 40px 48px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 12px;
+            letter-spacing: 0.04em;
+            margin-top: 48px;
+        }
+
+        /* ── ANIMATIONS ── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-up {
+            animation: fadeUp 0.5s ease-out both;
+        }
+
+        .fade-up:nth-child(2) { animation-delay: 0.06s; }
+        .fade-up:nth-child(3) { animation-delay: 0.12s; }
+        .fade-up:nth-child(4) { animation-delay: 0.18s; }
+        .fade-up:nth-child(5) { animation-delay: 0.24s; }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 900px) {
+            .header { padding: 20px 24px; flex-direction: column; gap: 12px; }
+            .content { padding: 24px; }
+            .branches { grid-template-columns: 1fr; gap: 32px; }
+            .staff-row { gap: 10px; }
+            .header-left { flex-direction: column; gap: 4px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="page-title">
+    <h1>Оргструктура <span>Высоко</span></h1>
+</div>
+
+<div class="content">
+
+    <!-- ═══ TOP: СОБСТВЕННИКИ ═══ -->
+    <div class="top-level">
+        <div class="card card-primary fade-up">
+            <div class="card-title">Собственники</div>
+            <div class="card-role">Стратегия, ключевые решения</div>
+        </div>
+
+        <div class="vline"></div>
+
+        <!-- Staff row: штабные роли -->
+        <div class="staff-row">
+            <div class="card fade-up">
+                <div class="card-title">Финдиректор</div>
+                <div class="card-role">Финансы, P&L, бюджет</div>
+                <div class="card-tbd">функции уточняются</div>
+            </div>
+            <div class="card card-expandable fade-up" onclick="toggle(this)">
+                <div class="card-title">People-менеджер</div>
+                <div class="card-role">Психолог, команда, найм</div>
+                <div class="card-details">
+                    <ul>
+                        <li>&ge;1 групповая сессия для смешанных цехов / мес</li>
+                        <li>2–3 групповых сессии для отдельных команд / мес</li>
+                        <li>&ge;7 личных сессий с сотрудниками / мес</li>
+                        <li>Психологические портреты на каждого сотрудника</li>
+                        <li>Найм: собеседования, отсев, сопровождение стажировки</li>
+                        <li>Посредник команда &harr; управление</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card fade-up">
+                <div class="card-title">Service-менеджер</div>
+                <div class="card-role">Стандарты сервиса</div>
+                <div class="card-tbd">функции уточняются</div>
+            </div>
+        </div>
+
+        <!-- ═══ TWO BRANCHES ═══ -->
+        <div class="branches">
+
+            <!-- ── LEFT: УПРАВЛЯЮЩИЙ ── -->
+            <div class="branch fade-up">
+                <div class="branch-label">Зал и операции</div>
+                <div class="card card-leader">
+                    <div class="card-title">Управляющий</div>
+                    <div class="card-role">Операционное управление</div>
+                    <div class="card-tbd">функции уточняются</div>
+                </div>
+
+                <div class="vline"></div>
+
+                <div class="card card-expandable" onclick="toggle(this)">
+                    <div class="card-title">Менеджер смены</div>
+                    <div class="card-role">&times;2 &middot; Руководство залом, баром, клинингом</div>
+                    <div class="card-details">
+                        <ul>
+                            <li>Контроль зала, бара, клининга по стандартам</li>
+                            <li>Решение конфликтов, комплименты гостям</li>
+                            <li>Кассовая дисциплина, приём кассы у бариста</li>
+                            <li>Контроль остатков, заявки поставщикам</li>
+                            <li>Инвентаризации, контроль ТМЦ</li>
+                            <li>Аттестации, пятиминутки, дисциплинарные взыскания</li>
+                            <li>Анализ план/факт выручки в течение смены</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="vline"></div>
+
+                <div class="team-grid">
+                    <div class="card card-expandable" onclick="toggle(this)">
+                        <div class="card-title">Бариста</div>
+                        <div class="card-details">
+                            <ul>
+                                <li>Отстройка эспрессо, напитки по тех-картам, латте-арт</li>
+                                <li>Консультация по напиткам, зерну, помолу</li>
+                                <li>Касса, старт/стоп листы</li>
+                                <li>Заготовки по тех-картам, каппинги</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card card-expandable" onclick="toggle(this)">
+                        <div class="card-title">Официанты</div>
+                        <div class="card-details">
+                            <ul>
+                                <li>Приём/отдача заказов, курсы подачи</li>
+                                <li>Консультация по блюдам, напиткам, пиву</li>
+                                <li>Старт/стоп листы, обратная связь от гостей</li>
+                                <li>Чистота зала</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card"><div class="card-title">Раннеры</div></div>
+                    <div class="card"><div class="card-title">Барбеки</div></div>
+                    <div class="card"><div class="card-title">Мойщицы</div></div>
+                    <div class="card"><div class="card-title">Мусорщик</div></div>
+                    <div class="card"><div class="card-title">Курьер</div></div>
+                </div>
+
+                <div class="admin-block">
+                    <div class="admin-block-label">Административный блок</div>
+                    <div class="admin-grid">
+                        <div class="card"><div class="card-title">Кадровик</div></div>
+                        <div class="card">
+                            <div class="card-title">Бухгалтер-калькулятор</div>
+                            <div class="dual-report">&nearr; двойное подчинение</div>
+                        </div>
+                        <div class="card"><div class="card-title">Дизайнер</div></div>
+                        <div class="card"><div class="card-title">Юрист</div></div>
+                        <div class="card"><div class="card-title">Таргетолог</div></div>
+                        <div class="card"><div class="card-title">СММ</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── RIGHT: БРЕНД-ШЕФ ── -->
+            <div class="branch fade-up">
+                <div class="branch-label">Кухня</div>
+                <div class="card card-leader">
+                    <div class="card-title">Бренд-Шеф</div>
+                    <div class="card-role">Меню, кухня, стандарты</div>
+                    <div class="card-tbd">функции уточняются</div>
+                </div>
+
+                <div class="vline"></div>
+
+                <div class="sub-branch">
+                    <div class="card">
+                        <div class="card-title">Бухгалтер-калькулятор</div>
+                        <div class="card-role">Калькуляция рецептур</div>
+                        <div class="dual-report">&swarr; та же позиция</div>
+                    </div>
+
+                    <div class="sub-branch-col">
+                        <div class="card">
+                            <div class="card-title">Су-шеф</div>
+                            <div class="card-role">Операционное управление кухней</div>
+                            <div class="card-tbd">функции уточняются</div>
+                        </div>
+
+                        <div class="vline"></div>
+
+                        <div class="team-grid">
+                            <div class="card"><div class="card-title">Повар Гриль</div></div>
+                            <div class="card"><div class="card-title">Заготовщики</div></div>
+                            <div class="card"><div class="card-title">Повара ГЦ</div></div>
+                            <div class="card"><div class="card-title">Повар Раздачи</div></div>
+                            <div class="card"><div class="card-title">Кондитер</div></div>
+                            <div class="card"><div class="card-title">Повар универсал</div></div>
+                            <div class="card"><div class="card-title">Повар ХЦ</div></div>
+                            <div class="card"><div class="card-title">Стажёры</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ═══ FUNCTIONAL ZONES ═══ -->
+    <div class="zones fade-up">
+        <div class="section-label">Функциональные зоны</div>
+        <table class="zones-table">
+            <thead>
+                <tr>
+                    <th>Зона</th>
+                    <th>Ответственный</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Кухня</td><td>Бренд-Шеф &rarr; Су-шеф</td></tr>
+                <tr><td>Бар</td><td>Администратор &rarr; Бариста</td></tr>
+                <tr><td>Зал</td><td>Администратор &rarr; Официанты</td></tr>
+                <tr><td>Кондитерский цех</td><td>Су-шеф &rarr; Кондитер</td></tr>
+                <tr><td>Доставка</td><td class="zone-tbd">уточняется</td></tr>
+                <tr><td>Чистота</td><td>Администратор &rarr; Мойщицы</td></tr>
+                <tr><td>Бухгалтерия и учёт</td><td>Бухгалтер-калькулятор &middot; iiko, ЕГАИС, Честный знак</td></tr>
+                <tr><td>Закупки и склад</td><td>Администратор + Бухгалтер</td></tr>
+                <tr><td>ТМЦ</td><td>Администратор</td></tr>
+                <tr><td>Техобеспечение</td><td class="zone-tbd">уточняется</td></tr>
+                <tr><td>Кадры</td><td>Кадровик + People-менеджер</td></tr>
+                <tr><td>Сервис-менеджмент</td><td>Service-менеджер</td></tr>
+                <tr><td>Тимбилдинг</td><td>People-менеджер</td></tr>
+                <tr><td>Маркетинг</td><td>Таргетолог + СММ</td></tr>
+                <tr><td>Дизайн</td><td>Дизайнер</td></tr>
+                <tr><td>Мерч</td><td class="zone-tbd">уточняется</td></tr>
+                <tr><td>Стратегия</td><td>Собственники</td></tr>
+                <tr><td>Финансы</td><td>Финдиректор</td></tr>
+                <tr><td>Юридические вопросы</td><td>Юрист</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ═══ INTERACTION MATRIX ═══ -->
+    <div class="matrix fade-up">
+        <div class="section-label">Матрица взаимодействия</div>
+        <div class="matrix-wrap">
+            <table class="matrix-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Собст-ки</th>
+                        <th>Управ-щий</th>
+                        <th>Бренд-Шеф</th>
+                        <th>Менеджер смены</th>
+                        <th>Су-шеф</th>
+                        <th>People-мен.</th>
+                        <th>Service-мен.</th>
+                        <th>Финдир.</th>
+                        <th>Бухгалтер</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Собственники</td>
+                        <td class="matrix-self"></td>
+                        <td>📋</td>
+                        <td>📋</td>
+                        <td></td>
+                        <td></td>
+                        <td>📋</td>
+                        <td>📋</td>
+                        <td>📋</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Управляющий</td>
+                        <td>📋</td>
+                        <td class="matrix-self"></td>
+                        <td>🔄</td>
+                        <td>📋</td>
+                        <td>🔄</td>
+                        <td>🔄</td>
+                        <td>🔄</td>
+                        <td>🔄</td>
+                        <td>📋</td>
+                    </tr>
+                    <tr>
+                        <td>Бренд-Шеф</td>
+                        <td>📋</td>
+                        <td>🔄</td>
+                        <td class="matrix-self"></td>
+                        <td>🔄</td>
+                        <td>📋</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>📋</td>
+                    </tr>
+                    <tr>
+                        <td>Менеджер смены</td>
+                        <td></td>
+                        <td>📋</td>
+                        <td>🔄</td>
+                        <td class="matrix-self"></td>
+                        <td>🔄</td>
+                        <td>⚡</td>
+                        <td>⚡</td>
+                        <td></td>
+                        <td>⚡</td>
+                    </tr>
+                    <tr>
+                        <td>Су-шеф</td>
+                        <td></td>
+                        <td>🔄</td>
+                        <td>📋</td>
+                        <td>🔄</td>
+                        <td class="matrix-self"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>⚡</td>
+                    </tr>
+                    <tr>
+                        <td>People-менеджер</td>
+                        <td>📋</td>
+                        <td>🔄</td>
+                        <td></td>
+                        <td>⚡</td>
+                        <td></td>
+                        <td class="matrix-self"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Service-менеджер</td>
+                        <td>📋</td>
+                        <td>🔄</td>
+                        <td></td>
+                        <td>⚡</td>
+                        <td></td>
+                        <td></td>
+                        <td class="matrix-self"></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Финдиректор</td>
+                        <td>📋</td>
+                        <td>🔄</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="matrix-self"></td>
+                        <td>📋</td>
+                    </tr>
+                    <tr>
+                        <td>Бухгалтер-калькулятор</td>
+                        <td></td>
+                        <td>📋</td>
+                        <td>📋</td>
+                        <td>⚡</td>
+                        <td>⚡</td>
+                        <td></td>
+                        <td></td>
+                        <td>📋</td>
+                        <td class="matrix-self"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="matrix-legend">
+            <div class="matrix-legend-item"><span class="matrix-legend-icon">📋</span> Прямое подчинение / отчётность</div>
+            <div class="matrix-legend-item"><span class="matrix-legend-icon">🔄</span> Регулярное взаимодействие</div>
+            <div class="matrix-legend-item"><span class="matrix-legend-icon">⚡</span> По ситуации / запросу</div>
+        </div>
+    </div>
+
+</div>
+
+<footer class="footer">
+    Высоко &middot; Организационная структура &middot; rev 1.0 &middot; 2026
+</footer>
+
+<script>
+function toggle(el) {
+    el.classList.toggle('expanded');
+}
+</script>
+
+</body>
+</html>
