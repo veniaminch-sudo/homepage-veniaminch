@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Проекты — Экосистема</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #F0EBE4;
+  --card: #FFFFFF;
+  --card-2: #FAF7F4;
+  --text: #2C2520;
+  --text-2: #6B5E54;
+  --text-3: #A09080;
+  --orange: #D96B2B;
+  --orange-light: rgba(217,107,43,0.08);
+  --orange-border: rgba(217,107,43,0.25);
+  --green: #5A8F5D;
+  --amber: #C49A3E;
+  --red: #C4483E;
+  --blue: #4A7FA8;
+  --border: #E0D9D0;
+  --border-strong: #C8C0B5;
+  --shadow: 0 1px 3px rgba(100,70,40,0.06);
+  --shadow-hover: 0 4px 16px rgba(100,70,40,0.1);
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+
+body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+
+/* ── GATE ── */
+.gate { position: fixed; inset: 0; background: var(--bg); z-index: 9999; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 16px; }
+.gate.hidden { display: none; }
+.gate input { font-family: 'Space Mono', monospace; font-size: 14px; padding: 12px 20px; border: 1px solid var(--border-strong); background: var(--card); color: var(--text); text-align: center; outline: none; letter-spacing: 0.1em; width: 240px; border-radius: var(--radius-sm); }
+.gate input:focus { border-color: var(--text); }
+.gate input.error { border-color: var(--red); animation: shake 0.3s; }
+@keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+.gate-label { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text-3); letter-spacing: 0.2em; text-transform: uppercase; }
+
+/* ── SIDEBAR ── */
+.sidebar { position: fixed; left: 0; top: 0; bottom: 0; width: 72px; background: var(--card-2); border-right: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; padding: 20px 0; z-index: 100; gap: 4px; }
+.sidebar-logo { font-family: 'Space Mono', monospace; font-size: 18px; font-weight: 700; color: var(--orange); margin-bottom: 28px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border: 2px solid var(--orange); border-radius: var(--radius-sm); }
+.nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: var(--text-3); padding: 10px 6px; border-radius: var(--radius-sm); transition: all 0.2s; width: 62px; }
+.nav-item:hover { color: var(--text-2); background: rgba(0,0,0,0.04); }
+.nav-item.active { color: var(--orange); background: var(--orange-light); }
+.nav-item svg { width: 22px; height: 22px; flex-shrink: 0; }
+.nav-item span { font-size: 9px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; text-align: center; line-height: 1.2; }
+
+/* ── MAIN ── */
+.main { margin-left: 72px; padding: 48px 48px 96px; max-width: 1240px; }
+.main > header { margin-bottom: 48px; }
+.main > header h1 { font-size: 36px; font-weight: 300; letter-spacing: -0.02em; }
+.main > header h1 strong { font-weight: 700; }
+.main > header .sub { font-family: 'Space Mono', monospace; font-size: 12px; color: var(--text-3); margin-top: 8px; letter-spacing: 0.05em; }
+
+/* ── STATS ── */
+.stats { display: flex; gap: 0; border: 1px solid var(--text); border-radius: var(--radius); overflow: hidden; margin-bottom: 48px; }
+.stat { flex: 1; padding: 20px; text-align: center; border-right: 1px solid var(--border); }
+.stat:last-child { border-right: none; }
+.stat-num { font-family: 'Space Mono', monospace; font-size: 28px; font-weight: 700; }
+.stat-label { font-size: 12px; color: var(--text-3); margin-top: 2px; }
+
+/* ── SECTION ── */
+.section { margin-bottom: 48px; }
+.section-title { font-family: 'Space Mono', monospace; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-3); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+.section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+/* ── SERVER CARDS ── */
+.servers { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.server { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; }
+.server-icon { font-size: 20px; margin-bottom: 12px; width: 36px; height: 36px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; }
+.server-icon.ru { background: rgba(217,107,43,0.1); color: var(--orange); }
+.server-icon.de { background: rgba(74,127,168,0.1); color: var(--blue); }
+.server-icon.mcp { background: rgba(90,143,93,0.1); color: var(--green); }
+.server-icon.auto { background: rgba(196,154,62,0.1); color: var(--amber); }
+.server h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+.server p { font-size: 12px; color: var(--text-3); line-height: 1.6; }
+
+/* ── PROJECT CARDS ── */
+.projects { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.projects.full { grid-template-columns: 1fr; }
+.projects.three { grid-template-columns: repeat(3, 1fr); }
+
+.project { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; transition: box-shadow 0.2s, border-color 0.2s; position: relative; }
+.project:hover { box-shadow: var(--shadow-hover); border-color: var(--border-strong); }
+.project-head { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px; }
+.project-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 7px; }
+.dot-active { background: var(--green); }
+.dot-paused { background: var(--amber); }
+.project-info { flex: 1; }
+.project-name { font-size: 20px; font-weight: 700; margin-bottom: 2px; }
+.project-url { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text-3); }
+.project-desc { font-size: 14px; color: var(--text-2); line-height: 1.6; margin-bottom: 20px; }
+.project-stack { display: flex; gap: 6px; flex-wrap: wrap; position: absolute; top: 16px; right: 16px; }
+.stack-tag { font-family: 'Space Mono', monospace; font-size: 9px; color: var(--text-3); background: var(--card-2); border: 1px solid var(--border); padding: 2px 8px; border-radius: 4px; letter-spacing: 0.03em; }
+
+/* ── MODULES ── */
+.modules { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; margin-bottom: 20px; }
+.mod { background: var(--card-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; }
+.mod-route { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--text-3); margin-bottom: 2px; }
+.mod-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+.mod-fn { font-size: 11px; color: var(--text-3); line-height: 1.4; }
+
+/* ── DIRECTION ── */
+.direction { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.dir-tag { font-size: 12px; padding: 5px 12px; border-radius: 20px; display: inline-flex; align-items: center; gap: 6px; }
+.dir-now { background: rgba(217,107,43,0.1); color: var(--orange); border: 1px solid var(--orange-border); font-weight: 600; }
+.dir-next { background: rgba(196,154,62,0.08); color: var(--amber); border: 1px solid rgba(196,154,62,0.25); }
+.dir-later { background: rgba(0,0,0,0.04); color: var(--text-3); border: 1px solid var(--border); }
+.dir-stable { background: rgba(90,143,93,0.08); color: var(--green); border: 1px solid rgba(90,143,93,0.25); }
+.dir-paused { background: rgba(196,154,62,0.08); color: var(--amber); border: 1px solid rgba(196,154,62,0.25); }
+
+/* ── TECH DEBT ── */
+.debt { font-size: 12px; color: var(--red); background: rgba(196,72,62,0.06); border: 1px solid rgba(196,72,62,0.15); border-radius: var(--radius-sm); padding: 8px 14px; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .sidebar { position: fixed; bottom: 0; top: auto; left: 0; right: 0; width: 100%; height: 56px; flex-direction: row; justify-content: center; padding: 0; gap: 0; border-right: none; border-top: 1px solid var(--border); }
+  .sidebar-logo { display: none; }
+  .nav-item { padding: 8px 20px; width: auto; }
+  .main { margin-left: 0; padding: 32px 20px 80px; }
+  .servers { grid-template-columns: repeat(2, 1fr); }
+  .projects, .projects.three { grid-template-columns: 1fr; }
+  .modules { grid-template-columns: 1fr; }
+  .stats { flex-wrap: wrap; }
+  .stat { min-width: 33%; }
+  .project-stack { position: static; margin-bottom: 12px; }
+}
+</style>
+</head>
+<body>
+
+<div class="gate" id="gate">
+  <div class="gate-label">password</div>
+  <input type="password" id="gate-input" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" autofocus>
+</div>
+
+<div id="app" style="display:none">
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-logo">V</div>
+  <a href="index.html" class="nav-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l5.447 2.724A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+    <span>Roadmap</span>
+  </a>
+  <a href="org.html" class="nav-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+    <span>Команда</span>
+  </a>
+  <a href="infra.html" class="nav-item active">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+    <span>Проекты</span>
+  </a>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+
+<header>
+  <h1><strong>Инфраструктура</strong> экосистемы</h1>
+  <div class="sub">12 проектов &middot; ~60 модулей &middot; 2 сервера Coolify &middot; rev. 30.03.2026</div>
+</header>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat"><div class="stat-num" style="color:var(--orange)">12</div><div class="stat-label">проектов</div></div>
+  <div class="stat"><div class="stat-num" style="color:var(--green)">~60</div><div class="stat-label">модулей</div></div>
+  <div class="stat"><div class="stat-num" style="color:var(--blue)">2</div><div class="stat-label">сервера</div></div>
+  <div class="stat"><div class="stat-num" style="color:var(--amber)">2</div><div class="stat-label">MCP</div></div>
+  <div class="stat"><div class="stat-num" style="color:var(--text-3)">3</div><div class="stat-label">закрыто</div></div>
+</div>
+
+<!-- SERVERS -->
+<div class="section">
+  <div class="section-title">Серверы и деплой</div>
+  <div class="servers">
+    <div class="server"><div class="server-icon ru">&#9632;</div><h4>Coolify Россия</h4><p>155.212.220.45 &mdash; veniaminch.ru<br>shavvaPNL, TickTick, Homepage, HouseMD</p></div>
+    <div class="server"><div class="server-icon de">&#9670;</div><h4>Coolify Германия</h4><p>highbrew.ru<br>HQ Highbrew, Big Boss</p></div>
+    <div class="server"><div class="server-icon mcp">&#9679;</div><h4>MCP серверы</h4><p>Локальные stdio<br>Telegram, ZenMoney</p></div>
+    <div class="server"><div class="server-icon auto">&#9201;</div><h4>Автоматизация</h4><p>LaunchAgent 30 мин<br>Claude &rarr; Notion (6 БД)</p></div>
+  </div>
+</div>
+
+<!-- ═══ РЕСТОРАН ═══ -->
+<div class="section">
+  <div class="section-title">Ресторан &laquo;Высоко&raquo; &amp; &laquo;Шавва&raquo;</div>
+
+  <!-- HQ HIGHBREW -->
+  <div class="projects full" style="margin-bottom:16px">
+    <div class="project">
+      <div class="project-head">
+        <div class="project-dot dot-active"></div>
+        <div class="project-info">
+          <div class="project-name">HQ Highbrew</div>
+          <div class="project-url">hq.highbrew.ru</div>
+        </div>
+      </div>
+      <div class="project-stack"><span class="stack-tag">React 19</span><span class="stack-tag">Vite</span><span class="stack-tag">Supabase</span><span class="stack-tag">Directus</span></div>
+      <div class="project-desc">Единая платформа ресторана. 12 модулей операционного управления: от канбана задач до книги сервиса. Два дизайн-стиля: glassmorphism (лендинг, авторизация) и clean functional (рабочие модули). Yandex OAuth, Supabase Realtime, Telegram-уведомления.</div>
+
+      <div class="modules">
+        <div class="mod"><div class="mod-route">/login</div><div class="mod-name">Auth</div><div class="mod-fn">Yandex/Google OAuth. Роли: admin, user, viewer</div></div>
+        <div class="mod"><div class="mod-route">/</div><div class="mod-name">Дашборд</div><div class="mod-fn">Навигация по модулям, glassmorphism</div></div>
+        <div class="mod"><div class="mod-route">/todo</div><div class="mod-name">Канбан</div><div class="mod-fn">Задачи с TG-уведомлениями, Realtime, роли</div></div>
+        <div class="mod"><div class="mod-route">/kb</div><div class="mod-name">База знаний</div><div class="mod-fn">Каталог блюд, обучение, админка (Directus CMS)</div></div>
+        <div class="mod"><div class="mod-route">/service-book</div><div class="mod-name">Сервис-бук</div><div class="mod-fn">8 секций: философия, ценности, продажи и др. CSS Modules</div></div>
+        <div class="mod"><div class="mod-route">/mystery-guest</div><div class="mod-name">Тайный гость</div><div class="mod-fn">Редактор чеклистов, сессии, результаты</div></div>
+        <div class="mod"><div class="mod-route">/plan</div><div class="mod-name">Финплан</div><div class="mod-fn">12-месячный P&amp;L. Пароль &rarr; роли</div></div>
+        <div class="mod"><div class="mod-route">/form</div><div class="mod-name">Анкета HR</div><div class="mod-fn">Опрос и оценка кандидатов</div></div>
+        <div class="mod"><div class="mod-route">/base</div><div class="mod-name">Картотека</div><div class="mod-fn">База кандидатов. Пароль &rarr; роли</div></div>
+        <div class="mod"><div class="mod-route">/salaryParsing</div><div class="mod-name">Анализ LC</div><div class="mod-fn">Парсинг зарплат из iiko</div></div>
+        <div class="mod"><div class="mod-route">/olap-revelations</div><div class="mod-name">iiko OLAP</div><div class="mod-fn">Обучение аналитике ресторана</div></div>
+        <div class="mod"><div class="mod-route">/sm</div><div class="mod-name">Метрики</div><div class="mod-fn">Бонусы и KPI менеджера смены. Пароль &rarr; роли</div></div>
+      </div>
+
+      <div class="direction">
+        <span class="dir-tag dir-now">Now: OAuth на все маршруты</span>
+        <span class="dir-tag dir-next">Next: Роли по должностям</span>
+        <span class="dir-tag dir-next">Next: Админка пользователей</span>
+        <span class="dir-tag dir-later">Later: Интеграция theFOT</span>
+      </div>
+      <div class="debt">957KB бандл &mdash; нужен code-splitting. Пароли на /plan, /base, /sm &mdash; заменить на OAuth-роли</div>
+    </div>
+  </div>
+
+  <!-- BB, shavvaPNL, theFOT -->
+  <div class="projects three">
+
+    <!-- BB -->
+    <div class="project">
+      <div class="project-head">
+        <div class="project-dot dot-active"></div>
+        <div class="project-info">
+          <div class="project-name">Big Boss</div>
+          <div class="project-url">bb.highbrew.ru</div>
+        </div>
+      </div>
+      <div class="project-stack"><span class="stack-tag">React 19</span><span class="stack-tag">TypeScript</span><span class="stack-tag">Supabase</span></div>
+      <div class="project-desc">Финансовая платформа ресторана. Семейный финпланер и аналитика продаж Шавва. Модули CRM, Analytics, Tasks &mdash; пока заглушки.</div>
+      <div class="modules">
+        <div class="mod"><div class="mod-name">Home</div><div class="mod-fn">Дашборд с тайлами (5 заглушек)</div></div>
+        <div class="mod"><div class="mod-name">Finance</div><div class="mod-fn">Семейный финпланер, план/факт, JSON</div></div>
+        <div class="mod"><div class="mod-name">Shavva Analytics</div><div class="mod-fn">Продажи: блюда, категории, Recharts</div></div>
+      </div>
+      <div class="direction"><span class="dir-tag dir-stable">Стабилен</span></div>
+      <div class="debt">Finance монолит ~129KB. Supabase-ключи хардкодом. Дублирование с MoneyGame</div>
+    </div>
+
+    <!-- shavvaPNL -->
+    <div class="project">
+      <div class="project-head">
+        <div class="project-dot dot-active"></div>
+        <div class="project-info">
+          <div class="project-name">shavvaPNL</div>
+          <div class="project-url">veniaminch.ru/shavva</div>
+        </div>
+      </div>
+      <div class="project-stack"><span class="stack-tag">React</span><span class="stack-tag">TypeScript</span><span class="stack-tag">Express</span></div>
+      <div class="project-desc">P&amp;L финмодель ресторана &laquo;Шавва&raquo; на 2026 год. 3 сценария, автоматический пересчёт % расходов.</div>
+      <div class="modules">
+        <div class="mod"><div class="mod-name">P&amp;L таблица</div><div class="mod-fn">12 месяцев: янв-фев факт, мар-дек прогноз</div></div>
+        <div class="mod"><div class="mod-name">Сценарии</div><div class="mod-fn">Позитивный / умеренный / негативный</div></div>
+        <div class="mod"><div class="mod-name">API</div><div class="mod-fn">Express: state.json как источник истины</div></div>
+      </div>
+      <div class="direction">
+        <span class="dir-tag dir-now">Now: Мерж бранча</span>
+        <span class="dir-tag dir-next">Next: Годовые итоги + экспорт PDF</span>
+      </div>
+      <div class="debt">App.tsx монолит 1200 строк. Пароль хардкодом</div>
+    </div>
+
+    <!-- theFOT -->
+    <div class="project">
+      <div class="project-head">
+        <div class="project-dot dot-paused"></div>
+        <div class="project-info">
+          <div class="project-name">theFOT</div>
+          <div class="project-url">bb.highbrew.ru/lc</div>
+        </div>
+      </div>
+      <div class="project-stack"><span class="stack-tag">Next.js 14</span><span class="stack-tag">Prisma</span><span class="stack-tag">PostgreSQL</span></div>
+      <div class="project-desc">ФОТ план/факт. Приостановлен &mdash; Next.js бэкенд не вписывается в Vite SPA, низкий приоритет от сотрудников.</div>
+      <div class="modules">
+        <div class="mod"><div class="mod-route">/master</div><div class="mod-name">Мастер-график</div><div class="mod-fn">Матрица день &times; месяц, бюджеты ролей</div></div>
+        <div class="mod"><div class="mod-route">/shifts</div><div class="mod-name">Смены</div><div class="mod-fn">Факт смен + импорт из Excel</div></div>
+        <div class="mod"><div class="mod-route">/plan-fact</div><div class="mod-name">План/Факт</div><div class="mod-fn">Сравнение часов и стоимости</div></div>
+        <div class="mod"><div class="mod-route">/revenue</div><div class="mod-name">Выручка</div><div class="mod-fn">Ввод и сравнение выручки</div></div>
+        <div class="mod"><div class="mod-route">/settings</div><div class="mod-name">Настройки</div><div class="mod-fn">Отделы, роли, алиасы iiko. 10 таблиц</div></div>
+      </div>
+      <div class="direction">
+        <span class="dir-tag dir-paused">Приостановлен</span>
+        <span class="dir-tag dir-later">Later: Интеграция в HQ</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ЛИЧНЫЕ ПРОЕКТЫ ═══ -->
+<div class="section">
+  <div class="section-title">Личные проекты</div>
+  <div class="projects">
+
+    <!-- MoneyGame -->
+    <div class="project">
+      <div class="project-head">
+        <div class="project-dot dot-active"></div>
+        <div class="project-info">
+          <div class="project-name">MoneyGame</div>
+          <div class="project-url">localhost (MVP)</div>
+        </div>
+      </div>
+      <div class="project-stack"><span class="stack-tag">Next.js</span><span class="stack-tag">TypeScript</span><span class="stack-tag">SQLite</span><span class="stack-tag">Drizzle</span></div>
+      <div class="project-desc">Персональный и семейный учёт финансов. Бюджет план/факт, кредиты с графиком, повторяющиеся расходы. Суммы в копейках, владельцы: me / partner / shared.</div>
+      <div class="modules">
+        <div class="mod"><div class="mod-route">/</div><div class="mod-name">Budget</div><div class="mod-fn">Месячный план/факт по категориям</div></div>
+        <div class="mod"><div class="mod-route">/transactions</div><div class="mod-name">Транзакции</div><div class="mod-fn">Журнал доходов и расходов</div></div>
+        <div class="mod"><div class="mod-route">/categories</div><div class="mod-name">Категории</div><div class="mod-fn">2-уровневая иерархия + drag-drop</div></div>
+        <div class="mod"><div class="mod-route">/credits</div><div class="mod-name">Кредиты</div><div class="mod-fn">Графики платежей, досрочное погашение</div></div>
+        <div class="mod"><div class="mod-route">/base</div><div class="mod-name">Годовая таблица</div><div class="mod-fn">Помесячная разбивка за год</div></div>
+        <div class="mod"><div class="mod-route">API</div><div class="mod-name">Recurring</div><div class="mod-fn">Правила повторяющихся расходов</div></div>
+        <div class="mod"><div class="mod-route">API</div><div class="mod-name">Income Plan</div><div class="mod-fn">Планирование доходов</div></div>
+      </div>
+      <div class="direction">
+        <span class="dir-tag dir-next">Next: Импорт банковских выписок</span>
+        <span class="dir-tag dir-later">Later: PnL / Cashflow / Balance &rarr; Деплой</span>
+      </div>
+    </div>
+
+    <!-- HouseMD -->
+    <div class="project">
+      <div class="project-head">
+        <div class="project-dot dot-active"></div>
+        <div class="project-info">
+          <div class="project-name">HouseMD</div>
+          <div class="project-url">veniaminch.ru/housemd</div>
+        </div>
+      </div>
+      <div class="project-stack"><span class="stack-tag">React 19</span><span class="stack-tag">Express 5</span><span class="stack-tag">grammy</span><span class="stack-tag">Supabase</span></div>
+      <div class="project-desc">AI-ассистент строительства дома. Двухрежимный интерфейс: справочник + чат с Claude. Генерация изображений, RAG-контекст, Telegram-бот. PWA.</div>
+      <div class="modules">
+        <div class="mod"><div class="mod-name">Guide Mode</div><div class="mod-fn">Справочник: таблицы, таймлайны, RAG-демо</div></div>
+        <div class="mod"><div class="mod-name">Workspace</div><div class="mod-fn">Мультичат с Claude opus-4-6, RAG-контекст</div></div>
+        <div class="mod"><div class="mod-name">Image Gen</div><div class="mod-fn">GenAPI.ru: NB2, Midjourney, Flux 2</div></div>
+        <div class="mod"><div class="mod-name">RAG Context</div><div class="mod-fn">Документы, файлы, изображения для Claude</div></div>
+        <div class="mod"><div class="mod-name">Telegram Bot</div><div class="mod-fn">grammy: чат, генерация, контекст, фото</div></div>
+      </div>
+      <div class="direction">
+        <span class="dir-tag dir-stable">Стабилен</span>
+        <span class="dir-tag dir-next">Next: Streaming, Markdown, PDF upload</span>
+      </div>
+    </div>
+
+    <!-- Zodchi -->
+    <div class="project">
+      <div class="project-head">
+        <div class="project-dot dot-active"></div>
+        <div class="project-info">
+          <div class="project-name">Zodchi</div>
+          <div class="project-url">@myzodchiyBot</div>
+        </div>
+      </div>
+      <div class="project-stack"><span class="stack-tag">Python</span><span class="stack-tag">aiogram 3</span><span class="stack-tag">Claude Sonnet</span><span class="stack-tag">ChromaDB</span></div>
+      <div class="project-desc">RAG Telegram-бот по строительным нормам (СП 31-105-2002). Гибридный поиск: BM25 + семантические эмбеддинги + RRF. Персональный контекст проекта.</div>
+      <div class="modules">
+        <div class="mod"><div class="mod-name">Bot</div><div class="mod-fn">aiogram 3: команды, диалоговый режим</div></div>
+        <div class="mod"><div class="mod-name">Claude Client</div><div class="mod-fn">Sonnet 4 + гибридный поиск BM25+embeddings</div></div>
+        <div class="mod"><div class="mod-name">Indexer</div><div class="mod-fn">PDF &rarr; секции &rarr; ChromaDB</div></div>
+        <div class="mod"><div class="mod-name">User Context</div><div class="mod-fn">Этажность, материалы, регион (JSON)</div></div>
+      </div>
+      <div class="direction">
+        <span class="dir-tag dir-stable">Стабилен</span>
+        <span class="dir-tag dir-next">Next: Multi-doc (ГОСТ, СНиП), reranking</span>
+      </div>
+    </div>
+
+    <!-- MindWeb -->
+    <div class="project">
+      <div class="project-head">
+        <div class="project-dot dot-active"></div>
+        <div class="project-info">
+          <div class="project-name">MindWeb</div>
+          <div class="project-url">&mdash;</div>
+        </div>
+      </div>
+      <div class="project-stack"><span class="stack-tag">Vanilla JS</span><span class="stack-tag">Canvas API</span><span class="stack-tag">localStorage</span></div>
+      <div class="project-desc">Canvas-based майндмеп для задач и идей. Single-file приложение. Ноды, drag, zoom, pan, каскадное удаление. Шрифт Cormorant Garamond.</div>
+      <div class="modules">
+        <div class="mod"><div class="mod-name">Canvas Editor</div><div class="mod-fn">Дерево нод: создание (N), редактирование (dblclick), Delete, Esc</div></div>
+      </div>
+      <div class="direction"><span class="dir-tag dir-stable">Стабилен</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ИНСТРУМЕНТЫ ═══ -->
+<div class="section">
+  <div class="section-title">Инструменты и сервисы</div>
+  <div class="projects">
+
+    <!-- ticktickmeout -->
+    <div class="project">
+      <div class="project-head">
+        <div class="project-dot dot-active"></div>
+        <div class="project-info">
+          <div class="project-name">ticktickmeout</div>
+          <div class="project-url">vault.veniaminch.ru</div>
+        </div>
+      </div>
+      <div class="project-stack"><span class="stack-tag">FastAPI</span><span class="stack-tag">Python</span><span class="stack-tag">Docker</span></div>
+      <div class="project-desc">OAuth-мост к TickTick API. Авторизация, получение задач и проектов. 5 разрешённых проектов.</div>
+      <div class="modules">
+        <div class="mod"><div class="mod-name">OAuth</div><div class="mod-fn">/ticktick/auth &rarr; callback, токен в volume</div></div>
+        <div class="mod"><div class="mod-name">API Proxy</div><div class="mod-fn">tasks, projects, status, create</div></div>
+      </div>
+      <div class="direction"><span class="dir-tag dir-stable">Стабилен</span></div>
+    </div>
+
+    <!-- mcp-telegram -->
+    <div class="project">
+      <div class="project-head">
+        <div class="project-dot dot-active"></div>
+        <div class="project-info">
+          <div class="project-name">mcp-telegram</div>
+          <div class="project-url">stdio (локально)</div>
+        </div>
+      </div>
+      <div class="project-stack"><span class="stack-tag">FastMCP</span><span class="stack-tag">Python</span><span class="stack-tag">httpx</span></div>
+      <div class="project-desc">MCP-сервер для Claude Code: отправка сообщений, файлов, изображений в Telegram. Вопрос-ответ с ожиданием.</div>
+      <div class="modules">
+        <div class="mod"><div class="mod-name">7 инструментов</div><div class="mod-fn">send_message, send_code, send_file, send_image, ask_and_wait, get_messages, notify</div></div>
+      </div>
+      <div class="direction"><span class="dir-tag dir-stable">Стабилен</span></div>
+    </div>
+
+    <!-- mcp-zenmoney -->
+    <div class="project">
+      <div class="project-head">
+        <div class="project-dot dot-active"></div>
+        <div class="project-info">
+          <div class="project-name">mcp-zenmoney</div>
+          <div class="project-url">stdio (локально)</div>
+        </div>
+      </div>
+      <div class="project-stack"><span class="stack-tag">FastMCP</span><span class="stack-tag">Python</span><span class="stack-tag">httpx</span></div>
+      <div class="project-desc">MCP-сервер для ZenMoney v8 API. Полная синхронизация через /v8/diff/, in-memory кэш 5 мин TTL.</div>
+      <div class="modules">
+        <div class="mod"><div class="mod-name">Чтение</div><div class="mod-fn">accounts, tags, transactions, merchants, budgets, summaries</div></div>
+        <div class="mod"><div class="mod-name">Запись</div><div class="mod-fn">create/update transactions, автокатегоризация</div></div>
+      </div>
+      <div class="direction"><span class="dir-tag dir-stable">Стабилен</span></div>
+    </div>
+
+    <!-- scripts -->
+    <div class="project">
+      <div class="project-head">
+        <div class="project-dot dot-active"></div>
+        <div class="project-info">
+          <div class="project-name">scripts</div>
+          <div class="project-url">LaunchAgent</div>
+        </div>
+      </div>
+      <div class="project-stack"><span class="stack-tag">Bash</span><span class="stack-tag">Claude Code</span><span class="stack-tag">Notion API</span></div>
+      <div class="project-desc">Автоматический трекер активности. LaunchAgent запускает Claude каждые 30 минут: сбор контекста &rarr; запись в Notion (6 баз данных).</div>
+      <div class="modules">
+        <div class="mod"><div class="mod-name">Standup</div><div class="mod-fn">4 фазы: контекст &rarr; сбор &rarr; запись &rarr; извлечение. TickTick + Notion</div></div>
+        <div class="mod"><div class="mod-name">MindWeb Agent</div><div class="mod-fn">Лаунчер агента для MindWeb</div></div>
+      </div>
+      <div class="direction"><span class="dir-tag dir-stable">Стабилен</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--text-3);text-align:right;margin-top:48px;letter-spacing:0.05em;">
+  veniaminch.ru &middot; 30.03.2026
+</div>
+
+</div><!-- /main -->
+</div><!-- /app -->
+
+<script>
+(function() {
+  var KEY = 'roadmap_auth', PASS = 'fh242d995';
+  var gate = document.getElementById('gate'), input = document.getElementById('gate-input'), app = document.getElementById('app');
+  if (sessionStorage.getItem(KEY) === '1') { gate.classList.add('hidden'); app.style.display = ''; return; }
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      if (input.value === PASS) { sessionStorage.setItem(KEY, '1'); gate.classList.add('hidden'); app.style.display = ''; }
+      else { input.classList.add('error'); input.value = ''; setTimeout(function() { input.classList.remove('error'); }, 400); }
+    }
+  });
+})();
+</script>
+</body>
+</html>

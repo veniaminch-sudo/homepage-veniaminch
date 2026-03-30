@@ -14,6 +14,21 @@
 .gate input.error { border-color: #C4483E; animation: shake 0.3s; }
 @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
 .gate-label { font-family: 'Space Mono', monospace; font-size: 11px; color: #8C8680; letter-spacing: 0.2em; text-transform: uppercase; }
+
+/* Sidebar */
+.sidebar { position: fixed; left: 0; top: 0; bottom: 0; width: 72px; background: #FAF7F4; border-right: 1px solid #E0D9D0; display: flex; flex-direction: column; align-items: center; padding: 20px 0; z-index: 100; gap: 4px; }
+.sidebar-logo { font-family: 'Space Mono', monospace; font-size: 18px; font-weight: 700; color: #D96B2B; margin-bottom: 28px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border: 2px solid #D96B2B; border-radius: 8px; }
+.nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #A09080; padding: 10px 6px; border-radius: 8px; transition: all 0.2s; width: 62px; }
+.nav-item:hover { color: #6B5E54; background: rgba(0,0,0,0.04); }
+.nav-item.active { color: #D96B2B; background: rgba(217,107,43,0.08); }
+.nav-item svg { width: 22px; height: 22px; flex-shrink: 0; }
+.nav-item span { font-size: 9px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; text-align: center; line-height: 1.2; }
+@media (max-width: 900px) {
+  .sidebar { position: fixed; bottom: 0; top: auto; left: 0; right: 0; width: 100%; height: 56px; flex-direction: row; justify-content: center; padding: 0; gap: 0; border-right: none; border-top: 1px solid #E0D9D0; }
+  .sidebar-logo { display: none; }
+  .nav-item { padding: 8px 20px; width: auto; }
+  .page { margin-left: 0 !important; padding-bottom: 80px !important; }
+}
 </style>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -39,7 +54,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-.page { max-width: 1200px; margin: 0 auto; padding: 80px 48px 120px; }
+.page { max-width: 1200px; margin: 0 auto; padding: 80px 48px 120px; margin-left: 72px; }
 
 .header { margin-bottom: 72px; }
 .header-label { font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gray); margin-bottom: 16px; }
@@ -148,11 +163,6 @@ body {
 .legend-item { display: flex; align-items: center; gap: 8px; font-family: 'Space Mono', monospace; font-size: 11px; color: var(--gray); letter-spacing: 0.05em; text-transform: uppercase; }
 .legend-dot { width: 9px; height: 9px; border-radius: 50%; }
 
-/* Nav links */
-.nav-links { display: flex; gap: 24px; margin-top: 20px; }
-.nav-links a { font-family: 'Space Mono', monospace; font-size: 12px; color: var(--gray); text-decoration: none; letter-spacing: 0.05em; border-bottom: 1px solid transparent; transition: all 0.2s; }
-.nav-links a:hover { color: var(--black); border-bottom-color: var(--black); }
-
 @media (max-width: 900px) {
   .page { padding: 40px 24px 80px; }
   .nnl { grid-template-columns: 1fr; }
@@ -177,15 +187,30 @@ body {
   <input type="password" id="gate-input" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" autofocus>
 </div>
 
-<div class="page" id="content" style="display:none;">
+<div id="content" style="display:none;">
+
+<nav class="sidebar">
+  <div class="sidebar-logo">V</div>
+  <a href="index.html" class="nav-item active">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l5.447 2.724A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+    <span>Roadmap</span>
+  </a>
+  <a href="org.html" class="nav-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+    <span>Команда</span>
+  </a>
+  <a href="infra.html" class="nav-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+    <span>Проекты</span>
+  </a>
+</nav>
+
+<div class="page">
 
   <div class="header">
     <div class="header-label">ecosystem roadmap</div>
     <h1><strong>Экосистема</strong> проектов Высоко&nbsp;&&nbsp;Шавва</h1>
     <div class="header-meta">rev. 30.03.2026 &middot; now-next-later &middot; last reviewed: today</div>
-    <nav class="nav-links">
-      <a href="org.html">Оргструктура</a>
-    </nav>
   </div>
 
   <!-- NOW - NEXT - LATER -->
@@ -433,7 +458,8 @@ body {
     <div class="legend-item"><div class="legend-dot" style="background:var(--blue);"></div>infrastructure</div>
   </div>
 
-</div>
+</div><!-- /page -->
+</div><!-- /content -->
 
 <script>
 (function() {
