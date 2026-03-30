@@ -150,6 +150,13 @@ body {
 .dot-paused { background: var(--amber); }
 .dot-closed { background: var(--light); }
 
+.project-card-stats { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border); font-family: 'Space Mono', monospace; font-size: 9px; color: var(--gray); line-height: 1.7; letter-spacing: 0.02em; }
+.stat-sep { color: var(--light); margin: 0 4px; }
+.grade-a { color: var(--green); font-weight: 700; }
+.grade-b { color: var(--blue); font-weight: 700; }
+.grade-c { color: var(--amber); font-weight: 700; }
+.platform-stats { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--gray); margin-bottom: 32px; letter-spacing: 0.03em; }
+
 /* Decisions */
 .decisions { margin-bottom: 64px; }
 .dec-row { display: grid; grid-template-columns: 100px 1fr 1fr; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
@@ -343,6 +350,7 @@ body {
     <span class="platform-corner tr">react 19 + vite + supabase</span>
     <div class="platform-name">HQ Highbrew</div>
     <div class="platform-url">hq.highbrew.ru &middot; 12 modules &middot; oauth + roles</div>
+    <div class="platform-stats">11 198 строк<span class="stat-sep">·</span>756 KB<span class="stat-sep">·</span>арх <span class="grade-b">B+</span><span class="stat-sep">·</span>~120ч разработки<span class="stat-sep">·</span>~2.5M tok<span class="stat-sep">/</span>~$15</div>
 
     <div class="modules">
       <div class="mod"><div class="mod-dot dot-core"></div><div class="mod-route">/todo</div><div class="mod-name">Канбан</div><div class="mod-desc">Задачи, повестки, Telegram</div></div>
@@ -368,6 +376,7 @@ body {
       <div class="project-card-url">bb.highbrew.ru</div>
       <div class="project-card-desc">Финансы ресторана. Семейный финпланер, аналитика продаж Шавва</div>
       <div class="project-card-modules">4 модуля: home, finance, shavva analytics, login</div>
+      <div class="project-card-stats">4 102 строки<span class="stat-sep">·</span>288 KB<span class="stat-sep">·</span>арх <span class="grade-a">A−</span><span class="stat-sep">·</span>~45ч<span class="stat-sep">·</span>~700K tok / ~$5</div>
     </div>
     <div class="project-card">
       <div class="project-card-dot dot-active"></div>
@@ -375,6 +384,7 @@ body {
       <div class="project-card-url">veniaminch.ru/shavva</div>
       <div class="project-card-desc">P&L финмодель Шавва. 12-месячный прогноз, 3 сценария</div>
       <div class="project-card-modules">3 модуля: p&l таблица, сценарии, api</div>
+      <div class="project-card-stats">2 589 строк<span class="stat-sep">·</span>160 KB<span class="stat-sep">·</span>арх <span class="grade-b">B</span><span class="stat-sep">·</span>~20ч<span class="stat-sep">·</span>~300K tok / ~$2</div>
     </div>
     <div class="project-card">
       <div class="project-card-dot dot-active"></div>
@@ -382,6 +392,7 @@ body {
       <div class="project-card-url">localhost</div>
       <div class="project-card-desc">Личный учёт финансов. Бюджет план/факт, кредиты, категории</div>
       <div class="project-card-modules">7 модулей: budget, transactions, categories, credits, base, recurring, income plan</div>
+      <div class="project-card-stats">5 383 строки<span class="stat-sep">·</span>292 KB<span class="stat-sep">·</span>арх <span class="grade-b">B</span><span class="stat-sep">·</span>~80ч<span class="stat-sep">·</span>~1.5M tok / ~$10</div>
     </div>
     <div class="project-card">
       <div class="project-card-dot dot-active"></div>
@@ -389,6 +400,7 @@ body {
       <div class="project-card-url">veniaminch.ru/housemd</div>
       <div class="project-card-desc">AI-ассистент строительства дома. Чат с Claude, генерация картинок, Telegram-бот</div>
       <div class="project-card-modules">5 модулей: guide, workspace, image gen, rag context, telegram bot</div>
+      <div class="project-card-stats">4 065 строк<span class="stat-sep">·</span>188 KB<span class="stat-sep">·</span>арх <span class="grade-b">B+</span><span class="stat-sep">·</span>~35ч<span class="stat-sep">·</span>~600K tok / ~$4</div>
     </div>
     <div class="project-card">
       <div class="project-card-dot dot-active"></div>
@@ -396,6 +408,7 @@ body {
       <div class="project-card-url">@myzodchiyBot</div>
       <div class="project-card-desc">RAG-бот по стройнормам. Гибридный поиск по СП 31-105-2002</div>
       <div class="project-card-modules">4 модуля: bot, claude client, indexer, user context</div>
+      <div class="project-card-stats">893 строки<span class="stat-sep">·</span>~80 KB кода<span class="stat-sep">·</span>арх <span class="grade-b">B−</span><span class="stat-sep">·</span>~15ч<span class="stat-sep">·</span>~300K tok / ~$2</div>
     </div>
     <div class="project-card">
       <div class="project-card-dot dot-active"></div>
@@ -403,6 +416,7 @@ body {
       <div class="project-card-url">&mdash;</div>
       <div class="project-card-desc">Canvas-based майндмеп для задач и идей. Vanilla JS, single-file</div>
       <div class="project-card-modules">1 модуль: canvas editor</div>
+      <div class="project-card-stats">616 строк<span class="stat-sep">·</span>24 KB<span class="stat-sep">·</span>арх <span class="grade-c">C+</span><span class="stat-sep">·</span>~6ч<span class="stat-sep">·</span>~120K tok / ~$1</div>
     </div>
     <div class="project-card">
       <div class="project-card-dot dot-active"></div>
@@ -410,6 +424,7 @@ body {
       <div class="project-card-url">vault.veniaminch.ru</div>
       <div class="project-card-desc">FastAPI OAuth-мост к TickTick API</div>
       <div class="project-card-modules">2 модуля: oauth, api proxy</div>
+      <div class="project-card-stats">342 строки<span class="stat-sep">·</span>184 KB<span class="stat-sep">·</span>арх <span class="grade-a">A−</span><span class="stat-sep">·</span>~8ч<span class="stat-sep">·</span>~150K tok / ~$1</div>
     </div>
     <div class="project-card">
       <div class="project-card-dot dot-active"></div>
@@ -417,6 +432,7 @@ body {
       <div class="project-card-url">stdio</div>
       <div class="project-card-desc">Telegram (7 инструментов) + ZenMoney (accounts, transactions, budgets)</div>
       <div class="project-card-modules">mcp-telegram + mcp-zenmoney</div>
+      <div class="project-card-stats">630 строк<span class="stat-sep">·</span>~10 KB<span class="stat-sep">·</span>арх <span class="grade-b">B</span><span class="stat-sep">·</span>~15ч<span class="stat-sep">·</span>~300K tok / ~$2</div>
     </div>
     <div class="project-card">
       <div class="project-card-dot dot-paused"></div>
@@ -424,6 +440,7 @@ body {
       <div class="project-card-url">bb.highbrew.ru/lc</div>
       <div class="project-card-desc">ФОТ план/факт. Приостановлен. Next.js + Prisma + PostgreSQL</div>
       <div class="project-card-modules">5 модулей: master, shifts, plan-fact, revenue, settings</div>
+      <div class="project-card-stats">25 454 строки*<span class="stat-sep">·</span>арх <span class="grade-c">C</span><span class="stat-sep">·</span>~30ч<span class="stat-sep">·</span>~500K tok / ~$3.5<span class="stat-sep">·</span>*с шаблонами Next.js</div>
     </div>
   </div>
 
@@ -449,6 +466,8 @@ body {
   </div>
 
   <div class="divider"></div>
+
+  <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--light);margin-bottom:32px;letter-spacing:0.03em;">* токены и стоимость — оценочные значения (~$7/MTok blended Sonnet). реальные данные недоступны из кода.</div>
 
   <div class="legend">
     <div class="legend-item"><div class="legend-dot" style="background:var(--red);"></div>now / high</div>
