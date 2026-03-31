@@ -1,0 +1,57 @@
+---
+title: ОРГСТРУКТУРА ВЫСОКО // REV. 1.0
+---
+graph TD
+    OWN["👑 СОБСТВЕННИКИ"]
+
+    OWN --> FIN["ФИНДИРЕКТОР\nфинансы, P&L, бюджет"]
+    OWN --> PPL["PEOPLE-МЕНЕДЖЕР\nпсихолог, благополучие, найм"]
+    OWN --> SVC["SERVICE-МЕНЕДЖЕР\nстандарты сервиса"]
+    OWN --> UPR["УПРАВЛЯЮЩИЙ\nоперационное управление"]
+    OWN --> CHEF["БРЕНД-ШЕФ\nменю, кухня, стандарты"]
+
+    UPR --> MS["МЕНЕДЖЕР СМЕНЫ (×2)\nзал, бар, клининг, касса"]
+    UPR --> ADM_BLOCK
+
+    subgraph ADM_BLOCK["АДМИН БЛОК"]
+        KDR["КАДРОВИК"]
+        BUH["БУХГАЛТЕР-КАЛЬКУЛЯТОР"]
+        DES["ДИЗАЙНЕР"]
+        JUR["ЮРИСТ"]
+        TRG["ТАРГЕТОЛОГ"]
+        SMM["СММ"]
+    end
+
+    MS --> BAR["БАРИСТА"]
+    MS --> OFC["ОФИЦИАНТЫ"]
+    MS --> RUN["РАННЕРЫ"]
+    MS --> BBQ["БАРБЕКИ"]
+    MS --> MOY["МОЙЩИЦЫ"]
+    MS --> MUS["МУСОРЩИК"]
+    MS --> KUR["КУРЬЕР"]
+
+    CHEF --> SU["СУ-ШЕФ\nоперационное управление кухней"]
+
+    SU --> PG["ПОВАР ГРИЛЬ"]
+    SU --> ZAG["ЗАГОТОВЩИКИ"]
+    SU --> PGC["ПОВАРА ГЦ"]
+    SU --> PR["ПОВАР РАЗДАЧИ"]
+    SU --> KON["КОНДИТЕР"]
+    SU --> PU["ПОВАР УНИВЕРСАЛ"]
+    SU --> PHC["ПОВАР ХЦ"]
+    SU --> STG["СТАЖЁРЫ"]
+
+    %% Styles
+    classDef owner fill:#fff3bf,stroke:#d97706,stroke-width:2px,color:#1e1e1e,font-weight:bold
+    classDef mgmt fill:#a5d8ff,stroke:#4a9eed,stroke-width:2px,color:#1e1e1e
+    classDef mid fill:#d0bfff,stroke:#8b5cf6,stroke-width:2px,color:#1e1e1e
+    classDef hall fill:#b2f2bb,stroke:#22c55e,stroke-width:1px,color:#1e1e1e
+    classDef kitchen fill:#ffd8a8,stroke:#f59e0b,stroke-width:1px,color:#1e1e1e
+    classDef admin fill:#e5dbff,stroke:#8b5cf6,stroke-width:1px,color:#1e1e1e
+
+    class OWN owner
+    class FIN,PPL,SVC,UPR,CHEF mgmt
+    class MS,SU mid
+    class BAR,OFC,RUN,BBQ,MOY,MUS,KUR hall
+    class PG,ZAG,PGC,PR,KON,PU,PHC,STG kitchen
+    class KDR,BUH,DES,JUR,TRG,SMM admin

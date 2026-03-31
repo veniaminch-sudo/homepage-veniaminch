@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2400" height="900" font-family="Inter, Helvetica, Arial, sans-serif">
+  <rect width="2400" height="900" fill="#fafaf8"/>
+
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#bbb"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="1200" y="40" text-anchor="middle" font-size="28" font-weight="700" fill="#1a1714">ОРГСТРУКТУРА ВЫСОКО</text>
+
+  <!-- ROW 1: СОБСТВЕННИКИ -->
+  <rect x="980" y="70" width="440" height="70" rx="14" fill="#fff3bf" stroke="#d97706" stroke-width="2.5"/>
+  <text x="1200" y="114" text-anchor="middle" font-size="24" font-weight="700" fill="#1a1714">СОБСТВЕННИКИ</text>
+
+  <!-- Arrows to Row 2 -->
+  <line x1="1050" y1="140" x2="200" y2="220" stroke="#bbb" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="1100" y1="140" x2="560" y2="220" stroke="#bbb" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="1200" y1="140" x2="920" y2="220" stroke="#bbb" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="1300" y1="140" x2="1340" y2="220" stroke="#bbb" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="1350" y1="140" x2="1980" y2="220" stroke="#bbb" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- ROW 2 -->
+  <!-- Финдиректор -->
+  <rect x="40" y="220" width="320" height="70" rx="14" fill="#a5d8ff" stroke="#4a9eed" stroke-width="2"/>
+  <text x="200" y="264" text-anchor="middle" font-size="20" font-weight="600" fill="#1a1714">ФИНДИРЕКТОР</text>
+
+  <!-- People-менеджер -->
+  <rect x="400" y="220" width="320" height="70" rx="14" fill="#a5d8ff" stroke="#4a9eed" stroke-width="2"/>
+  <text x="560" y="264" text-anchor="middle" font-size="20" font-weight="600" fill="#1a1714">PEOPLE-МЕНЕДЖЕР</text>
+
+  <!-- Service-менеджер -->
+  <rect x="760" y="220" width="320" height="70" rx="14" fill="#a5d8ff" stroke="#4a9eed" stroke-width="2"/>
+  <text x="920" y="264" text-anchor="middle" font-size="20" font-weight="600" fill="#1a1714">SERVICE-МЕНЕДЖЕР</text>
+
+  <!-- Управляющий -->
+  <rect x="1140" y="220" width="400" height="70" rx="14" fill="#a5d8ff" stroke="#4a9eed" stroke-width="2"/>
+  <text x="1340" y="264" text-anchor="middle" font-size="20" font-weight="600" fill="#1a1714">УПРАВЛЯЮЩИЙ</text>
+
+  <!-- Бренд-Шеф -->
+  <rect x="1820" y="220" width="320" height="70" rx="14" fill="#a5d8ff" stroke="#4a9eed" stroke-width="2"/>
+  <text x="1980" y="264" text-anchor="middle" font-size="20" font-weight="600" fill="#1a1714">БРЕНД-ШЕФ</text>
+
+  <!-- Arrows from Управляющий -->
+  <line x1="1250" y1="290" x2="900" y2="400" stroke="#bbb" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="1430" y1="290" x2="1540" y2="400" stroke="#bbb" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- Arrow from Бренд-Шеф -->
+  <line x1="1980" y1="290" x2="1980" y2="400" stroke="#bbb" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- ROW 3 -->
+  <!-- Менеджер смены -->
+  <rect x="660" y="400" width="480" height="70" rx="14" fill="#d0bfff" stroke="#8b5cf6" stroke-width="2"/>
+  <text x="900" y="444" text-anchor="middle" font-size="20" font-weight="600" fill="#1a1714">МЕНЕДЖЕР СМЕНЫ (x2)</text>
+
+  <!-- Админ блок -->
+  <text x="1540" y="390" text-anchor="middle" font-size="16" font-weight="700" fill="#7c3aed">АДМИН БЛОК</text>
+  <rect x="1320" y="400" width="440" height="180" rx="14" fill="#e5dbff" stroke="#8b5cf6" stroke-width="1.5" opacity="0.7"/>
+  <text x="1540" y="436" text-anchor="middle" font-size="18" fill="#1a1714">КАДРОВИК</text>
+  <text x="1540" y="466" text-anchor="middle" font-size="18" fill="#1a1714">БУХГАЛТЕР-КАЛЬКУЛЯТОР</text>
+  <text x="1540" y="496" text-anchor="middle" font-size="18" fill="#1a1714">ДИЗАЙНЕР  ·  ЮРИСТ</text>
+  <text x="1540" y="526" text-anchor="middle" font-size="18" fill="#1a1714">ТАРГЕТОЛОГ  ·  СММ</text>
+
+  <!-- Су-шеф -->
+  <rect x="1820" y="400" width="320" height="70" rx="14" fill="#d0bfff" stroke="#8b5cf6" stroke-width="2"/>
+  <text x="1980" y="444" text-anchor="middle" font-size="20" font-weight="600" fill="#1a1714">СУ-ШЕФ</text>
+
+  <!-- Arrows to Row 4 -->
+  <line x1="900" y1="470" x2="900" y2="560" stroke="#bbb" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="1980" y1="470" x2="1980" y2="560" stroke="#bbb" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- ROW 4: LINE STAFF -->
+  <!-- Зал -->
+  <rect x="540" y="570" width="720" height="90" rx="14" fill="#b2f2bb" stroke="#22c55e" stroke-width="1.5" opacity="0.85"/>
+  <text x="900" y="606" text-anchor="middle" font-size="18" font-weight="500" fill="#1a1714">БАРИСТА  ·  ОФИЦИАНТЫ  ·  РАННЕРЫ  ·  БАРБЕКИ</text>
+  <text x="900" y="636" text-anchor="middle" font-size="18" font-weight="500" fill="#1a1714">МОЙЩИЦЫ  ·  МУСОРЩИК  ·  КУРЬЕР</text>
+
+  <!-- Кухня -->
+  <rect x="1700" y="570" width="560" height="90" rx="14" fill="#ffd8a8" stroke="#f59e0b" stroke-width="1.5" opacity="0.85"/>
+  <text x="1980" y="606" text-anchor="middle" font-size="18" font-weight="500" fill="#1a1714">ПОВАР ГРИЛЬ  ·  ЗАГОТОВЩИКИ  ·  ПОВАРА ГЦ</text>
+  <text x="1980" y="636" text-anchor="middle" font-size="18" font-weight="500" fill="#1a1714">РАЗДАЧА  ·  КОНДИТЕР  ·  УНИВЕРСАЛ  ·  ХЦ  ·  СТАЖЁРЫ</text>
+
+  <!-- Legend -->
+  <rect x="540" y="710" width="20" height="20" rx="4" fill="#fff3bf" stroke="#d97706" stroke-width="1.5"/>
+  <text x="570" y="726" font-size="16" fill="#555">Собственники</text>
+  <rect x="730" y="710" width="20" height="20" rx="4" fill="#a5d8ff" stroke="#4a9eed" stroke-width="1.5"/>
+  <text x="760" y="726" font-size="16" fill="#555">Руководство</text>
+  <rect x="920" y="710" width="20" height="20" rx="4" fill="#d0bfff" stroke="#8b5cf6" stroke-width="1.5"/>
+  <text x="950" y="726" font-size="16" fill="#555">Средний менеджмент</text>
+  <rect x="1170" y="710" width="20" height="20" rx="4" fill="#b2f2bb" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="1200" y="726" font-size="16" fill="#555">Персонал зала</text>
+  <rect x="1380" y="710" width="20" height="20" rx="4" fill="#ffd8a8" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="1410" y="726" font-size="16" fill="#555">Кухня</text>
+</svg>

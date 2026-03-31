@@ -105,6 +105,22 @@ body {
 .mod-dot { position: absolute; top: 12px; right: 12px; width: 7px; height: 7px; border-radius: 50%; }
 .dot-new { background: var(--green); }
 .dot-core { background: var(--blue); }
+.dot-first { background: var(--amber); }
+.mod[data-screenshots], .project-card[data-screenshots] { cursor: pointer; }
+.mod[data-screenshots]:hover, .project-card[data-screenshots]:hover { background: rgba(0,0,0,0.04); }
+
+/* Screenshot Modal */
+.sc-overlay { position: fixed; inset: 0; background: rgba(26,24,21,0.85); z-index: 9998; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
+.sc-overlay.open { opacity: 1; pointer-events: all; }
+.sc-modal { background: var(--white); max-width: 860px; width: 94%; max-height: 90vh; overflow-y: auto; position: relative; padding: 0; }
+.sc-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 24px; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--white); z-index: 1; }
+.sc-title { font-size: 16px; font-weight: 600; }
+.sc-subtitle { font-size: 12px; color: var(--gray); margin-top: 2px; }
+.sc-close { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--gray); cursor: pointer; border: 1px solid var(--border); background: none; transition: all 0.15s; }
+.sc-close:hover { color: var(--black); border-color: var(--black); }
+.sc-body { padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+.sc-body img { width: 100%; display: block; border: 1px solid var(--border); }
+.sc-empty { padding: 48px 24px; text-align: center; color: var(--light); font-size: 13px; font-family: 'Space Mono', monospace; }
 
 /* Dependencies */
 .deps-box { border: 1px solid var(--border); padding: 32px; margin-bottom: 64px; background: var(--white); }
@@ -350,19 +366,19 @@ body {
     <span class="platform-corner tr">react 19 + vite + supabase</span>
     <div class="platform-name">HQ Highbrew</div>
     <div class="platform-url">hq.highbrew.ru &middot; 12 modules &middot; oauth + roles</div>
-    <div class="platform-stats">11 198 строк<span class="stat-sep">·</span>756 KB<span class="stat-sep">·</span>арх <span class="grade-b">B+</span><span class="stat-sep">·</span>~120ч разработки<span class="stat-sep">·</span>~2.5M tok<span class="stat-sep">/</span>~$15</div>
+    <div class="platform-stats">12 500+ строк<span class="stat-sep">·</span>820 KB<span class="stat-sep">·</span>арх <span class="grade-b">B+</span><span class="stat-sep">·</span>~140ч разработки<span class="stat-sep">·</span>~3.5M tok<span class="stat-sep">/</span>~$20</div>
 
     <div class="modules">
-      <div class="mod"><div class="mod-dot dot-core"></div><div class="mod-route">/todo</div><div class="mod-name">Канбан</div><div class="mod-desc">Задачи, повестки, Telegram</div></div>
-      <div class="mod"><div class="mod-route">/form</div><div class="mod-name">Анкета HR</div><div class="mod-desc">Оценка кандидатов</div></div>
-      <div class="mod"><div class="mod-route">/base</div><div class="mod-name">Картотека</div><div class="mod-desc">База кандидатов</div></div>
-      <div class="mod"><div class="mod-route">/mystery-guest</div><div class="mod-name">Тайный гость</div><div class="mod-desc">Чеклисты аудитов</div></div>
-      <div class="mod"><div class="mod-route">/plan</div><div class="mod-name">Финплан</div><div class="mod-desc">12 месяцев P&L</div></div>
-      <div class="mod"><div class="mod-route">/salaryParsing</div><div class="mod-name">Анализ LC</div><div class="mod-desc">Зарплаты из iiko</div></div>
-      <div class="mod"><div class="mod-route">/sm</div><div class="mod-name">Метрики</div><div class="mod-desc">Бонусы админа</div></div>
-      <div class="mod"><div class="mod-route">/olap-revelations</div><div class="mod-name">iiko OLAP</div><div class="mod-desc">Обучение аналитике</div></div>
-      <div class="mod"><div class="mod-dot dot-new"></div><div class="mod-route">/service-book</div><div class="mod-name">Сервис-бук</div><div class="mod-desc">8 секций стандартов</div></div>
-      <div class="mod"><div class="mod-dot dot-new"></div><div class="mod-route">/kb</div><div class="mod-name">Каталог блюд</div><div class="mod-desc">Справочник + тренировка</div></div>
+      <div class="mod" data-screenshots="todo" data-title="Канбан" data-desc="Задачи, подзадачи, повестки, Telegram-уведомления"><div class="mod-dot dot-core"></div><div class="mod-route">/todo</div><div class="mod-name">Канбан</div><div class="mod-desc">Задачи, подзадачи, повестки, Telegram</div></div>
+      <div class="mod" data-screenshots="form" data-title="Анкета HR" data-desc="Оценка кандидатов при найме"><div class="mod-route">/form</div><div class="mod-name">Анкета HR</div><div class="mod-desc">Оценка кандидатов</div></div>
+      <div class="mod" data-screenshots="base" data-title="Картотека" data-desc="База кандидатов"><div class="mod-route">/base</div><div class="mod-name">Картотека</div><div class="mod-desc">База кандидатов</div></div>
+      <div class="mod" data-screenshots="mystery-guest" data-title="Тайный гость" data-desc="Чеклисты аудитов"><div class="mod-route">/mystery-guest</div><div class="mod-name">Тайный гость</div><div class="mod-desc">Чеклисты аудитов</div></div>
+      <div class="mod" data-screenshots="plan" data-title="Финплан" data-desc="Первый модуль, собранный через Claude Code. 12 месяцев P&L"><div class="mod-dot dot-first"></div><div class="mod-route">/plan</div><div class="mod-name">Финплан</div><div class="mod-desc">Первый модуль на Claude Code</div></div>
+      <div class="mod" data-screenshots="salaryParsing" data-title="Анализ LC" data-desc="Парсинг зарплат из iiko"><div class="mod-route">/salaryParsing</div><div class="mod-name">Анализ LC</div><div class="mod-desc">Зарплаты из iiko</div></div>
+      <div class="mod" data-screenshots="sm" data-title="Метрики" data-desc="Бонусы администратора"><div class="mod-route">/sm</div><div class="mod-name">Метрики</div><div class="mod-desc">Бонусы админа</div></div>
+      <div class="mod" data-screenshots="olap" data-title="iiko OLAP" data-desc="Обучение аналитике"><div class="mod-route">/olap-revelations</div><div class="mod-name">iiko OLAP</div><div class="mod-desc">Обучение аналитике</div></div>
+      <div class="mod" data-screenshots="service-book" data-title="Сервис-бук" data-desc="8 секций стандартов обслуживания"><div class="mod-dot dot-new"></div><div class="mod-route">/service-book</div><div class="mod-name">Сервис-бук</div><div class="mod-desc">8 секций стандартов</div></div>
+      <div class="mod" data-screenshots="kb" data-title="Каталог блюд" data-desc="Справочник + тренировка"><div class="mod-dot dot-new"></div><div class="mod-route">/kb</div><div class="mod-name">Каталог блюд</div><div class="mod-desc">Справочник + тренировка</div></div>
     </div>
   </div>
 
@@ -370,7 +386,7 @@ body {
   <div class="section-label">Все проекты</div>
 
   <div class="projects-grid">
-    <div class="project-card">
+    <div class="project-card" data-screenshots="bb" data-title="Big Boss" data-desc="Финансы ресторана, аналитика продаж">
       <div class="project-card-dot dot-active"></div>
       <div class="project-card-name">Big Boss</div>
       <div class="project-card-url">bb.highbrew.ru</div>
@@ -378,7 +394,7 @@ body {
       <div class="project-card-modules">4 модуля: home, finance, shavva analytics, login</div>
       <div class="project-card-stats">4 102 строки<span class="stat-sep">·</span>288 KB<span class="stat-sep">·</span>арх <span class="grade-a">A−</span><span class="stat-sep">·</span>~45ч<span class="stat-sep">·</span>~700K tok / ~$5</div>
     </div>
-    <div class="project-card">
+    <div class="project-card" data-screenshots="shavva" data-title="shavvaPNL" data-desc="P&L финмодель Шавва, 3 сценария">
       <div class="project-card-dot dot-active"></div>
       <div class="project-card-name">shavvaPNL</div>
       <div class="project-card-url">veniaminch.ru/shavva</div>
@@ -386,7 +402,7 @@ body {
       <div class="project-card-modules">3 модуля: p&l таблица, сценарии, api</div>
       <div class="project-card-stats">2 589 строк<span class="stat-sep">·</span>160 KB<span class="stat-sep">·</span>арх <span class="grade-b">B</span><span class="stat-sep">·</span>~20ч<span class="stat-sep">·</span>~300K tok / ~$2</div>
     </div>
-    <div class="project-card">
+    <div class="project-card" data-screenshots="moneygame" data-title="MoneyGame" data-desc="Личный учёт финансов, бюджет план/факт">
       <div class="project-card-dot dot-active"></div>
       <div class="project-card-name">MoneyGame</div>
       <div class="project-card-url">localhost</div>
@@ -394,7 +410,7 @@ body {
       <div class="project-card-modules">7 модулей: budget, transactions, categories, credits, base, recurring, income plan</div>
       <div class="project-card-stats">5 383 строки<span class="stat-sep">·</span>292 KB<span class="stat-sep">·</span>арх <span class="grade-b">B</span><span class="stat-sep">·</span>~80ч<span class="stat-sep">·</span>~1.5M tok / ~$10</div>
     </div>
-    <div class="project-card">
+    <div class="project-card" data-screenshots="housemd" data-title="HouseMD" data-desc="AI-ассистент строительства дома">
       <div class="project-card-dot dot-active"></div>
       <div class="project-card-name">HouseMD</div>
       <div class="project-card-url">veniaminch.ru/housemd</div>
@@ -402,7 +418,7 @@ body {
       <div class="project-card-modules">5 модулей: guide, workspace, image gen, rag context, telegram bot</div>
       <div class="project-card-stats">4 065 строк<span class="stat-sep">·</span>188 KB<span class="stat-sep">·</span>арх <span class="grade-b">B+</span><span class="stat-sep">·</span>~35ч<span class="stat-sep">·</span>~600K tok / ~$4</div>
     </div>
-    <div class="project-card">
+    <div class="project-card" data-screenshots="zodchi" data-title="Zodchi" data-desc="RAG-бот по стройнормам СП 31-105-2002">
       <div class="project-card-dot dot-active"></div>
       <div class="project-card-name">Zodchi</div>
       <div class="project-card-url">@myzodchiyBot</div>
@@ -480,6 +496,20 @@ body {
 </div><!-- /page -->
 </div><!-- /content -->
 
+<!-- Screenshot Modal -->
+<div class="sc-overlay" id="sc-overlay">
+  <div class="sc-modal">
+    <div class="sc-header">
+      <div>
+        <div class="sc-title" id="sc-title"></div>
+        <div class="sc-subtitle" id="sc-subtitle"></div>
+      </div>
+      <button class="sc-close" id="sc-close">&times;</button>
+    </div>
+    <div class="sc-body" id="sc-body"></div>
+  </div>
+</div>
+
 <script>
 (function() {
   var KEY = 'roadmap_auth';
@@ -491,21 +521,86 @@ body {
   if (sessionStorage.getItem(KEY) === '1') {
     gate.classList.add('hidden');
     content.style.display = '';
-    return;
+  } else {
+    input.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        if (input.value === PASS) {
+          sessionStorage.setItem(KEY, '1');
+          gate.classList.add('hidden');
+          content.style.display = '';
+        } else {
+          input.classList.add('error');
+          input.value = '';
+          setTimeout(function() { input.classList.remove('error'); }, 400);
+        }
+      }
+    });
   }
 
-  input.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') {
-      if (input.value === PASS) {
-        sessionStorage.setItem(KEY, '1');
-        gate.classList.add('hidden');
-        content.style.display = '';
-      } else {
-        input.classList.add('error');
-        input.value = '';
-        setTimeout(function() { input.classList.remove('error'); }, 400);
-      }
+  // Screenshot modal
+  var overlay = document.getElementById('sc-overlay');
+  var scTitle = document.getElementById('sc-title');
+  var scSubtitle = document.getElementById('sc-subtitle');
+  var scBody = document.getElementById('sc-body');
+  var scClose = document.getElementById('sc-close');
+
+  // Screenshot registry: key -> array of image filenames
+  var SCREENSHOTS = {
+    'todo': ['todo-1.jpg', 'todo-2.jpg', 'todo-3.jpg'],
+    'form': ['form-1.jpg'],
+    'base': ['base-1.jpg'],
+    'mystery-guest': ['mystery-guest-1.jpg'],
+    'plan': ['plan-1.jpg'],
+    'salaryParsing': ['salaryParsing-1.jpg'],
+    'sm': [],
+    'olap': ['olap-1.jpg'],
+    'service-book': ['service-book-1.jpg'],
+    'kb': ['kb-1.jpg'],
+    'bb': ['bb-1.jpg'],
+    'shavva': ['shavva-1.jpg'],
+    'moneygame': [],
+    'housemd': ['housemd-1.jpg'],
+    'zodchi': []
+  };
+
+  function openModal(key, title, desc) {
+    scTitle.textContent = title;
+    scSubtitle.textContent = desc;
+    var files = SCREENSHOTS[key] || [];
+    scBody.innerHTML = '';
+    if (files.length === 0) {
+      scBody.innerHTML = '<div class="sc-empty">screenshots coming soon</div>';
+    } else {
+      files.forEach(function(f) {
+        var img = document.createElement('img');
+        img.src = 'screenshots/' + f;
+        img.alt = title;
+        img.onerror = function() { this.style.display = 'none'; };
+        scBody.appendChild(img);
+      });
     }
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('[data-screenshots]').forEach(function(el) {
+    el.addEventListener('click', function(e) {
+      e.stopPropagation();
+      openModal(el.dataset.screenshots, el.dataset.title, el.dataset.desc);
+    });
+  });
+
+  scClose.addEventListener('click', closeModal);
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) closeModal();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
   });
 })();
 </script>
