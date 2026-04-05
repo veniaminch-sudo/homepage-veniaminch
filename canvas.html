@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Canvas — Ecosystem</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tldraw/tldraw.css">
+
+<style>
+/* Reset */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; font-family: 'Inter', system-ui, sans-serif; background: #F5F2ED; color: #1A1815; -webkit-font-smoothing: antialiased; overflow: hidden; }
+
+/* Password gate (из index.html) */
+.gate { position: fixed; inset: 0; background: #F5F2ED; z-index: 9999; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 16px; }
+.gate.hidden { display: none; }
+.gate input { font-family: 'Space Mono', monospace; font-size: 14px; padding: 12px 20px; border: 1px solid #C8C2BA; background: #FDFCFA; color: #1A1815; text-align: center; outline: none; letter-spacing: 0.1em; width: 240px; }
+.gate input:focus { border-color: #1A1815; }
+.gate input.error { border-color: #C4483E; animation: shake 0.3s; }
+@keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+.gate-label { font-family: 'Space Mono', monospace; font-size: 11px; color: #8C8680; letter-spacing: 0.2em; text-transform: uppercase; }
+
+/* Sidebar (из index.html) */
+.sidebar { position: fixed; left: 0; top: 0; bottom: 0; width: 72px; background: #FAF7F4; border-right: 1px solid #E0D9D0; display: flex; flex-direction: column; align-items: center; padding: 20px 0; z-index: 100; gap: 4px; }
+.sidebar-logo { font-family: 'Space Mono', monospace; font-size: 18px; font-weight: 700; color: #D96B2B; margin-bottom: 28px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border: 2px solid #D96B2B; border-radius: 8px; }
+.nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #A09080; padding: 10px 6px; border-radius: 8px; transition: all 0.2s; width: 62px; }
+.nav-item:hover { color: #6B5E54; background: rgba(0,0,0,0.04); }
+.nav-item.active { color: #D96B2B; background: rgba(217,107,43,0.08); }
+.nav-item svg { width: 22px; height: 22px; flex-shrink: 0; }
+.nav-item span { font-size: 9px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; text-align: center; line-height: 1.2; }
+
+/* Canvas viewport */
+#canvas-root { position: fixed; top: 0; right: 0; bottom: 0; left: 72px; background: #FDFCFA; }
+#canvas-fallback { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px; font-family: 'Space Mono', monospace; font-size: 12px; color: #8C8680; letter-spacing: 0.1em; text-transform: uppercase; text-align: center; padding: 40px; }
+#canvas-fallback .err { color: #C4483E; font-size: 10px; max-width: 500px; letter-spacing: 0.05em; text-transform: none; line-height: 1.6; }
+
+@media (max-width: 900px) {
+  .sidebar { position: fixed; bottom: 0; top: auto; left: 0; right: 0; width: 100%; height: 56px; flex-direction: row; justify-content: center; padding: 0; gap: 0; border-right: none; border-top: 1px solid #E0D9D0; }
+  .sidebar-logo { display: none; }
+  .nav-item { padding: 8px 20px; width: auto; }
+  #canvas-root { left: 0; bottom: 56px; }
+}
+</style>
+
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@18.3.1",
+    "react/": "https://esm.sh/react@18.3.1/",
+    "react-dom": "https://esm.sh/react-dom@18.3.1",
+    "react-dom/": "https://esm.sh/react-dom@18.3.1/",
+    "tldraw": "https://esm.sh/tldraw?external=react,react-dom"
+  }
+}
+</script>
+</head>
+<body>
+
+<div class="gate" id="gate">
+  <div class="gate-label">password</div>
+  <input type="password" id="gate-input" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" autofocus>
+</div>
+
+<div id="content" style="display:none;">
+
+<nav class="sidebar">
+  <div class="sidebar-logo">V</div>
+  <a href="index.html" class="nav-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l5.447 2.724A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+    <span>Roadmap</span>
+  </a>
+  <a href="org.html" class="nav-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+    <span>Команда</span>
+  </a>
+  <a href="infra.html" class="nav-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+    <span>Проекты</span>
+  </a>
+  <a href="canvas.html" class="nav-item active">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
+    <span>Canvas</span>
+  </a>
+</nav>
+
+<div id="canvas-root">
+  <div id="canvas-fallback">
+    <div>loading tldraw…</div>
+  </div>
+</div>
+
+</div>
+
+<script>
+(function() {
+  var KEY = 'roadmap_auth';
+  var PASS = 'fh242d995';
+  var gate = document.getElementById('gate');
+  var input = document.getElementById('gate-input');
+  var content = document.getElementById('content');
+
+  if (sessionStorage.getItem(KEY) === '1') {
+    gate.classList.add('hidden');
+    content.style.display = '';
+  } else {
+    input.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        if (input.value === PASS) {
+          sessionStorage.setItem(KEY, '1');
+          gate.classList.add('hidden');
+          content.style.display = '';
+        } else {
+          input.classList.add('error');
+          input.value = '';
+          setTimeout(function() { input.classList.remove('error'); }, 400);
+        }
+      }
+    });
+  }
+})();
+</script>
+
+<script type="module">
+  try {
+    const React = (await import('react')).default;
+    const { createRoot } = await import('react-dom/client');
+    const { Tldraw } = await import('tldraw');
+
+    const root = createRoot(document.getElementById('canvas-root'));
+    root.render(
+      React.createElement(Tldraw, {
+        persistenceKey: 'veniaminch-canvas-main'
+      })
+    );
+  } catch (err) {
+    console.error('[canvas] failed to mount tldraw', err);
+    const fallback = document.getElementById('canvas-fallback');
+    if (fallback) {
+      fallback.innerHTML =
+        '<div>tldraw failed to load</div>' +
+        '<div class="err">' + (err && err.message ? err.message : 'Unknown error') +
+        '<br><br>Попробуй обновить страницу. Если не помогает — проверь консоль браузера (F12).</div>';
+    }
+  }
+</script>
+</body>
+</html>
